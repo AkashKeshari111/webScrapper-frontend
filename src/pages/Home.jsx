@@ -1,29 +1,33 @@
-import { useEffect, useState } from "react";
-
-import { Flame, TrendingUp } from "lucide-react";
+import { useEffect, useState, useContext } from "react";
+import { Flame } from "lucide-react";
 
 import Navbar from "../components/layout/Navbar";
-
 import Container from "../components/ui/Container";
-
 import StoriesGrid from "../components/stories/StoriesGrid";
 
 import API from "../services/api";
+import { BookmarkContext } from "../context/BookmarkContext.jsx";
 
 function Home() {
+  const { bookmarkedStories } = useContext(BookmarkContext);
+
   const [stories, setStories] = useState([]);
-
-  const [bookmarkedStories, setBookmarkedStories] = useState([]);
-
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit,setLimit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
 
-  // fetch stories
   useEffect(() => {
     const fetchStories = async () => {
       try {
-        const { data } = await API.get("/stories");
+        setLoading(true);
 
-        setStories(data);
+        const { data } = await API.get(
+          `/stories?page=${page}&limit=${limit}`
+        );
+
+        setStories(data?.data || []);
+        setTotalPages(data?.meta?.totalPages || 1);
       } catch (error) {
         console.log(error);
       } finally {
@@ -32,217 +36,94 @@ function Home() {
     };
 
     fetchStories();
-  }, []);
+  }, [page, limit]);
 
-  // bookmark handler
-  const handleBookmark = async (id) => {
-    try {
-      await API.post(`/stories/${id}/bookmark`);
 
-      setBookmarkedStories((prev) => {
-        if (prev.includes(id)) {
-          return prev.filter((storyId) => storyId !== id);
-        }
-
-        return [...prev, id];
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+
       <Navbar />
 
       <Container>
-        <section
-          className="
-            py-12
-            md:py-16
-          "
-        >
-          <div
-            className="
-              bg-gradient-to-br
-              from-black
-              to-gray-800
-              rounded-[2rem]
-              p-8
-              md:p-12
-              text-white
-              relative
-              overflow-hidden
-            "
-          >
-            <div
-              className="
-                absolute
-                top-0
-                right-0
-                w-72
-                h-72
-                bg-orange-500/20
-                blur-3xl
-                rounded-full
-              "
-            />
+
+        {/* HERO */}
+        <section className="py-14 md:py-20">
+
+          <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-black via-gray-900 to-gray-800 px-8 md:px-12 py-14 md:py-20 text-white shadow-2xl">
+
+            {/* glow effect */}
+            <div className="absolute -top-20 -right-20 w-72 h-72 bg-orange-500/20 blur-3xl rounded-full" />
 
             <div className="relative z-10">
-              <div
-                className="
-                  inline-flex
-                  items-center
-                  gap-2
-                  bg-white/10
-                  border
-                  border-white/20
-                  px-4
-                  py-2
-                  rounded-full
-                  text-sm
-                  mb-6
-                "
-              >
-                <Flame size={16} />
-                Top 10 Hacker News Stories
+
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 px-4 py-2 rounded-full text-sm mb-6 backdrop-blur">
+                <Flame size={16} className="text-orange-400" />
+                Top Hacker News Stories
               </div>
 
-              <h1
-                className="
-                  text-4xl
-                  md:text-6xl
-                  font-bold
-                  leading-tight
-                  max-w-4xl
-                "
-              >
-                Discover Trending Tech Stories & Developer News
+              <h1 className="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight">
+                Discover Trending <br />
+                <span className="text-orange-400">Tech Stories</span>
               </h1>
 
-              <p
-                className="
-                  mt-6
-                  text-gray-300
-                  text-lg
-                  max-w-2xl
-                  leading-relaxed
-                "
-              >
-                Stay updated with the most discussed startup ideas, AI
-                innovations, engineering blogs, and developer trends curated
-                from Hacker News.
+              <p className="mt-6 text-gray-300 max-w-xl text-lg">
+                Stay updated with AI, startups, engineering blogs and developer insights.
               </p>
 
-              <div
-                className="
-                  mt-10
-                  flex
-                  flex-wrap
-                  gap-4
-                "
-              >
-                <div
-                  className="
-                    bg-white/10
-                    border
-                    border-white/10
-                    rounded-2xl
-                    px-5
-                    py-4
-                    min-w-[180px]
-                  "
-                >
-                  <p className="text-3xl font-bold">10</p>
-
-                  <p className="text-sm text-gray-300 mt-1">Stories Updated</p>
-                </div>
-
-                <div
-                  className="
-                    bg-white/10
-                    border
-                    border-white/10
-                    rounded-2xl
-                    px-5
-                    py-4
-                    min-w-[180px]
-                  "
-                >
-                  <div className="flex items-center gap-2">
-                    <TrendingUp size={18} />
-
-                    <p className="text-3xl font-bold">Live</p>
-                  </div>
-
-                  <p className="text-sm text-gray-300 mt-1">Scraped from HN</p>
-                </div>
-              </div>
             </div>
+
           </div>
+
         </section>
 
-        <section className="pb-12">
-          <div
-            className="
-              flex
-              items-center
-              justify-between
-              mb-8
-            "
-          >
+
+
+        {/* CONTENT */}
+        <section className="pb-14">
+
+          {/* HEADER */}
+          <div className="flex items-end justify-between mb-8">
+
             <div>
-              <h2
-                className="
-                  text-3xl
-                  font-bold
-                "
-              >
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
                 Top Stories
               </h2>
 
-              <p
-                className="
-                  text-gray-500
-                  mt-2
-                "
-              >
-                Latest trending stories from the tech world.
+              <p className="text-gray-500 mt-1">
+                Latest trending developer content
               </p>
             </div>
+
           </div>
 
+
+
+          {/* LOADING */}
           {loading ? (
-            <div
-              className="
-                grid
-                grid-cols-1
-                md:grid-cols-2
-                lg:grid-cols-3
-                gap-6
-              "
-            >
-              {Array.from({ length: 6 }).map((_, index) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
                 <div
-                  key={index}
-                  className="
-                      h-60
-                      rounded-2xl
-                      bg-white
-                      animate-pulse
-                    "
+                  key={i}
+                  className="h-64 bg-white rounded-3xl shadow-sm animate-pulse"
                 />
               ))}
             </div>
           ) : (
             <StoriesGrid
               stories={stories}
-              onBookmark={handleBookmark}
-              bookmarkedStories={bookmarkedStories}
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+              limit={limit}
+              setLimit={setLimit}
             />
           )}
+
         </section>
+
       </Container>
+
     </div>
   );
 }

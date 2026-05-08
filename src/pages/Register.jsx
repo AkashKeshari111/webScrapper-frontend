@@ -2,9 +2,9 @@ import { useState, useContext } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
-import API from "../services/api";
-
 import { AuthContext } from "../context/AuthContext";
+
+import API from "../services/api";
 
 import AuthLayout from "../components/auth/AuthLayout";
 
@@ -36,7 +36,7 @@ function Register() {
     try {
       const { data } = await API.post("/auth/register", formData);
 
-      login(data);
+      login(data.data);
 
       navigate("/");
     } catch (error) {
@@ -71,23 +71,9 @@ function Register() {
         <AuthButton text="Register" />
       </form>
 
-      <p
-        className="
-          text-sm
-          text-center
-          text-gray-500
-          mt-6
-        "
-      >
+      <p className="text-sm text-center text-gray-500 mt-6">
         Already have an account?
-        <Link
-          to="/login"
-          className="
-            text-black
-            font-medium
-            ml-1
-          "
-        >
+        <Link to="/login" className="text-black font-medium ml-1">
           Login
         </Link>
       </p>

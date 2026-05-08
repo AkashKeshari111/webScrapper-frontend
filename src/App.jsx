@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Bookmarks from "./pages/Bookmarks";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import StoryDetails from "./pages/StoryDetails";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           </ProtectedRoute>
         }
       />
+      <Route path="/stories/:id" element={<StoryDetails />} />
     </Routes>
   );
 }
