@@ -57,8 +57,6 @@ function StoryCard({ story, isBookmarked }) {
         </div>
 
 
-
-        {/* BOOKMARK BUTTON (FIXED SIZE) */}
         <button
           onClick={() => handleBookmark(story._id)}
           className={`

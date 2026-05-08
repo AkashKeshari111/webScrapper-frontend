@@ -36,10 +36,9 @@ function StoryDetails() {
     fetchStory();
   }, [id]);
 
-  const isBookmarked = bookmarkedStories?.includes(id);
+  const isBookmarked = bookmarkedStories.some((s) => s._id === id);
 
   const handleBookmark = async () => {
-    // 🔒 not logged in → redirect login
     if (!user) {
       navigate("/login", {
         state: { from: `/stories/${id}` },

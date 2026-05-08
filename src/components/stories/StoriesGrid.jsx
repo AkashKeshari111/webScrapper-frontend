@@ -24,7 +24,9 @@ function StoriesGrid({
       {/* HEADER GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {stories.map((story, index) => {
-          const isBookmarked = bookmarkedStories.includes(story._id);
+          const isBookmarked = bookmarkedStories.some(
+            (s) => s._id === story._id,
+          );
 
           return (
             <div

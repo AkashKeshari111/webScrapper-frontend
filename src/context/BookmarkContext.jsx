@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import API from "../services/api";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const BookmarkContext = createContext();
 
 export const BookmarkProvider = ({ children }) => {
   const [bookmarkedStories, setBookmarkedStories] = useState([]);
-
+  const { user } = useContext(AuthContext);
 
   const fetchBookmarks = async () => {
     try {
@@ -16,9 +18,20 @@ export const BookmarkProvider = ({ children }) => {
     }
   };
 
+    useEffect(() => {
+    if (user) {
+      fetchBookmarks();
+    } else {
+      setBookmarkedStories([]);
+    }
+  }, [user]);
+
+  
+
   const toggleBookmark = async (id) => {
     try {
       const { data } = await API.post(`/stories/${id}/bookmark`);
+      const updatedIds = data.data.bookmarks.map((b) => b._id || b);
 
       setBookmarkedStories(data.data);
     } catch (err) {
@@ -27,7 +40,9 @@ export const BookmarkProvider = ({ children }) => {
   };
 
   return (
-    <BookmarkContext.Provider value={{ bookmarkedStories, toggleBookmark,fetchBookmarks }}>
+    <BookmarkContext.Provider
+      value={{ bookmarkedStories, toggleBookmark, fetchBookmarks }}
+    >
       {children}
     </BookmarkContext.Provider>
   );
