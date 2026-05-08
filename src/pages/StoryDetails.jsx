@@ -1,6 +1,11 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { ArrowUpRight, Clock3, Star } from "lucide-react";
+
+import {
+  ArrowUpRight,
+  Clock3,
+  Star,
+} from "lucide-react";
 
 import API from "../services/api";
 
@@ -12,22 +17,30 @@ import Container from "../components/ui/Container";
 
 function StoryDetails() {
   const { id } = useParams();
+
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
 
-  const { bookmarkedStories, toggleBookmark } = useContext(BookmarkContext);
+  const {
+    bookmarkedStories,
+    toggleBookmark,
+  } = useContext(BookmarkContext);
 
   const [story, setStory] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStory = async () => {
       try {
         const { data } = await API.get(`/stories/${id}`);
+
         setStory(data?.data);
+
       } catch (error) {
         console.log(error);
+
       } finally {
         setLoading(false);
       }
@@ -36,13 +49,18 @@ function StoryDetails() {
     fetchStory();
   }, [id]);
 
-  const isBookmarked = bookmarkedStories.some((s) => s._id === id);
+  const isBookmarked = bookmarkedStories.some(
+    (s) => s._id === id
+  );
 
   const handleBookmark = async () => {
     if (!user) {
       navigate("/login", {
-        state: { from: `/stories/${id}` },
+        state: {
+          from: `/stories/${id}`,
+        },
       });
+
       return;
     }
 
@@ -51,13 +69,25 @@ function StoryDetails() {
 
   if (loading) {
     return (
-      <div className="p-10 text-center text-gray-500">Loading story...</div>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+
+        <div className="p-10 text-center text-gray-500">
+          Loading story...
+        </div>
+      </div>
     );
   }
 
   if (!story) {
     return (
-      <div className="p-10 text-center text-gray-500">Story not found</div>
+      <div className="min-h-screen bg-gray-50">
+        <Navbar />
+
+        <div className="p-10 text-center text-gray-500">
+          Story not found
+        </div>
+      </div>
     );
   }
 
@@ -66,63 +96,220 @@ function StoryDetails() {
       <Navbar />
 
       <Container>
-        <section className="py-12">
-          <Link to="/" className="text-sm text-gray-500 hover:text-black">
+        <section className="py-8 md:py-12">
+          {/* BACK BUTTON */}
+          <Link
+            to="/"
+            className="
+              inline-flex
+              items-center
+              text-sm
+              text-gray-500
+              hover:text-black
+              transition
+            "
+          >
             ← Back to stories
           </Link>
 
-          <div className="mt-6 bg-white border rounded-[2rem] p-8 md:p-12">
+          {/* CARD */}
+          <div
+            className="
+              mt-6
+              bg-white
+              border
+              rounded-[2rem]
+              p-5
+              sm:p-7
+              md:p-10
+              lg:p-12
+              shadow-sm
+            "
+          >
+            {/* TOP BADGES */}
             <div className="flex flex-wrap items-center gap-3 mb-6">
-              <div className="px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold">
+              <div
+                className="
+                  px-4
+                  py-2
+                  rounded-full
+                  bg-orange-100
+                  text-orange-700
+                  text-xs
+                  sm:text-sm
+                  font-semibold
+                "
+              >
                 Trending Story
               </div>
 
-              <div className="flex items-center gap-2 text-gray-500 text-sm">
+              <div
+                className="
+                  flex
+                  items-center
+                  gap-2
+                  text-gray-500
+                  text-xs
+                  sm:text-sm
+                "
+              >
                 <Clock3 size={16} />
-                {story.postedAt || "Recently"}
+
+                <span>
+                  {story.postedAt || "Recently"}
+                </span>
               </div>
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
+            {/* TITLE */}
+            <h1
+              className="
+                text-3xl
+                sm:text-4xl
+                md:text-5xl
+                lg:text-6xl
+                font-bold
+                leading-tight
+                tracking-tight
+                break-words
+              "
+            >
               {story.title}
             </h1>
 
-            <p className="mt-8 text-lg text-gray-600 leading-relaxed max-w-4xl">
-              {story.description}
+            {/* DESCRIPTION */}
+            <p
+              className="
+                mt-6
+                md:mt-8
+                text-base
+                md:text-lg
+                text-gray-600
+                leading-relaxed
+                max-w-4xl
+              "
+            >
+              {story.description ||
+                "No description available"}
             </p>
 
-            <div className="flex flex-wrap items-center gap-4 mt-10">
-              <div className="px-5 py-3 rounded-2xl bg-gray-100 text-sm font-medium">
+            {/* META */}
+            <div
+              className="
+                flex
+                flex-wrap
+                items-center
+                gap-3
+                md:gap-4
+                mt-8
+                md:mt-10
+              "
+            >
+              <div
+                className="
+                  px-4
+                  py-3
+                  rounded-2xl
+                  bg-gray-100
+                  text-sm
+                  font-medium
+                "
+              >
                 ⭐ {story.points} points
               </div>
 
-              <div className="px-5 py-3 rounded-2xl bg-gray-100 text-sm font-medium">
+              <div
+                className="
+                  px-4
+                  py-3
+                  rounded-2xl
+                  bg-gray-100
+                  text-sm
+                  font-medium
+                  break-all
+                "
+              >
                 👨‍💻 by {story.author}
               </div>
             </div>
 
-            <div className="mt-12 flex flex-wrap items-center gap-4">
+            {/* ACTIONS */}
+            <div
+              className="
+                mt-10
+                md:mt-12
+                flex
+                flex-col
+                sm:flex-row
+                items-stretch
+                sm:items-center
+                gap-4
+              "
+            >
+              {/* READ BUTTON */}
               <a
                 href={story.url}
                 target="_blank"
                 rel="noreferrer"
-                className="h-14 px-7 rounded-2xl bg-black text-white flex items-center gap-3 font-medium hover:opacity-90 transition"
+                className="
+                  h-14
+                  px-6
+                  rounded-2xl
+                  bg-black
+                  text-white
+                  flex
+                  items-center
+                  justify-center
+                  gap-3
+                  font-medium
+                  hover:opacity-90
+                  transition
+                  text-sm
+                  md:text-base
+                "
               >
                 Read Original Article
+
                 <ArrowUpRight size={20} />
               </a>
 
+              {/* BOOKMARK BUTTON */}
               <button
                 onClick={handleBookmark}
                 className={`
-                  h-14 px-7 rounded-2xl border flex items-center gap-3 font-medium transition cursor-pointer
+                  h-14
+                  px-6
+                  rounded-2xl
+                  border
+                  flex
+                  items-center
+                  justify-center
+                  gap-3
+                  font-medium
+                  transition
+                  cursor-pointer
+                  text-sm
+                  md:text-base
 
-                  ${isBookmarked ? "bg-black text-white" : "hover:bg-gray-100"}
+                  ${
+                    isBookmarked
+                      ? "bg-black text-white"
+                      : "hover:bg-gray-100"
+                  }
                 `}
               >
-                <Star size={20} fill={isBookmarked ? "currentColor" : "none"} />
+                <Star
+                  size={20}
+                  fill={
+                    isBookmarked
+                      ? "currentColor"
+                      : "none"
+                  }
+                />
 
-                {isBookmarked ? "Bookmarked" : "Bookmark Story"}
+                {isBookmarked
+                  ? "Bookmarked"
+                  : "Bookmark Story"}
               </button>
             </div>
           </div>
