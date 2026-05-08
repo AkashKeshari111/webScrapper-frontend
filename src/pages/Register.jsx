@@ -43,7 +43,6 @@ function Register() {
   return (
     <AuthLayout title="Create Account" subtitle="Start exploring stories">
 
-      {/* 🔥 ERROR BOX */}
       {error && (
         <div className="
           mb-4

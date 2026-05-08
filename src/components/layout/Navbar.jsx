@@ -32,12 +32,17 @@ function Navbar() {
           <Link
             to="/"
             className="
-              text-2xl
-              font-bold
-              tracking-tight
-            "
+    flex
+    items-center
+    gap-2
+    text-2xl
+    font-bold
+    tracking-tight
+  "
           >
-            ScrapeNews
+            <img src="/favicon.svg" alt="ScrapeNews Logo" className="w-7 h-7" />
+
+            <span>ScrapeNews</span>
           </Link>
 
           {/* nav */}

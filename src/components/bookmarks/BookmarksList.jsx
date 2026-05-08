@@ -38,10 +38,9 @@ function BookmarksList({ bookmarks = [] }) {
                 <span className="px-3 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
                   Bookmarked
                 </span>
-
                 <span className="flex items-center gap-1 text-xs text-gray-500">
                   <Clock3 size={14} />
-                  Recently saved
+                  {story.postedAt || "Recently saved"}
                 </span>
               </div>
 

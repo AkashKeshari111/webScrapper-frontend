@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import API from "../services/api";
 
@@ -9,6 +9,8 @@ import AuthButton from "../components/auth/AuthButton";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { login } = useContext(AuthContext);
 
   const [error, setError] = useState("");
@@ -17,6 +19,8 @@ function Login() {
     email: "",
     password: "",
   });
+
+  const from = location.state?.from || "/";
 
   const handleChange = (e) => {
     setFormData({
@@ -33,7 +37,9 @@ function Login() {
       const { data } = await API.post("/auth/login", formData);
 
       login(data?.data);
-      navigate("/");
+
+      navigate(from, { replace: true });
+
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong");
     }
@@ -42,7 +48,7 @@ function Login() {
   return (
     <AuthLayout title="Welcome Back" subtitle="Login to continue">
 
-      {/* 🔥 ERROR TOAST */}
+      {/* 🔥 ERROR UI */}
       {error && (
         <div className="
           mb-4
@@ -52,13 +58,13 @@ function Login() {
           border border-red-200
           text-red-600
           text-sm
-          animate-pulse
         ">
           {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+
         <AuthInput
           type="email"
           name="email"
@@ -74,6 +80,7 @@ function Login() {
         />
 
         <AuthButton text="Login" />
+
       </form>
 
       <p className="text-sm text-center text-gray-500 mt-6">
