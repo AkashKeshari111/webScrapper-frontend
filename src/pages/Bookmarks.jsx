@@ -33,7 +33,7 @@ function Bookmarks() {
             </div>
           </div>
 
-          <BookmarksList bookmarks={bookmarkedStories} />
+          <BookmarksList />
         </section>
       </Container>
     </div>

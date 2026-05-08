@@ -2,14 +2,14 @@ import { ArrowUpRight, BookmarkX, Clock3 } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { BookmarkContext } from "../../context/BookmarkContext";
 
-function BookmarksList({ bookmarks = [] }) {
-  const { toggleBookmark, fetchBookmarks } = useContext(BookmarkContext);
+function BookmarksList() {
+  const { toggleBookmark, fetchBookmarks, bookmarkedStories} = useContext(BookmarkContext);
 
   useEffect(() => {
     fetchBookmarks();
   }, []);
 
-  if (!bookmarks.length) {
+  if (!bookmarkedStories.length) {
     return (
       <div className="text-center py-16 text-gray-500">No bookmarks yet</div>
     );
@@ -17,7 +17,7 @@ function BookmarksList({ bookmarks = [] }) {
 
   return (
     <div className="space-y-6">
-      {bookmarks.map((story) => (
+      {bookmarkedStories.map((story) => (
         <article
           key={story._id}
           className="
