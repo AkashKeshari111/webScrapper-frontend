@@ -11,6 +11,7 @@ function AuthButton({ text }) {
         font-medium
         hover:opacity-90
         transition
+        cursor-pointer
       "
     >
       {text}

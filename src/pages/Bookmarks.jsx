@@ -9,14 +9,12 @@ import { BookmarkContext } from "../context/BookmarkContext";
 function Bookmarks() {
   const { bookmarkedStories } = useContext(BookmarkContext);
 
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
 
       <Container>
         <section className="py-10">
-          {/* HEADER */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
             <div>
               <h1 className="text-4xl font-bold">Your Bookmarks</h1>
@@ -26,7 +24,6 @@ function Bookmarks() {
               </p>
             </div>
 
-            {/* STATS CARD */}
             <div className="bg-white border rounded-2xl px-6 py-4 shadow-sm">
               <p className="text-3xl font-bold">
                 {bookmarkedStories?.length || 0}

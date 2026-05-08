@@ -33,7 +33,6 @@ function Pagination({ page, setPage, totalPages, limit, setLimit }) {
           <span className="font-semibold text-black">{totalPages}</span>
         </p>
 
-        {/* LIMIT SELECTOR */}
         <select
           value={limit}
           onChange={(e) => setLimit(Number(e.target.value))}
@@ -46,7 +45,6 @@ function Pagination({ page, setPage, totalPages, limit, setLimit }) {
         </select>
       </div>
 
-      {/* PAGINATION BUTTONS */}
       <div className="flex items-center gap-2 flex-wrap">
         {/* PREV */}
         <button
@@ -57,7 +55,6 @@ function Pagination({ page, setPage, totalPages, limit, setLimit }) {
           <ChevronLeft size={18} />
         </button>
 
-        {/* NUMBERS */}
         {getPages().map((p, i) => (
           <button
             key={i}
@@ -79,7 +76,6 @@ function Pagination({ page, setPage, totalPages, limit, setLimit }) {
           </button>
         ))}
 
-        {/* NEXT */}
         <button
           disabled={page === totalPages}
           onClick={() => setPage((prev) => prev + 1)}

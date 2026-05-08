@@ -29,7 +29,6 @@ function Navbar() {
             justify-between
           "
         >
-          {/* logo */}
           <Link
             to="/"
             className="
@@ -38,7 +37,7 @@ function Navbar() {
               tracking-tight
             "
           >
-            NewsHub
+            ScrapeNews
           </Link>
 
           {/* nav */}
@@ -49,7 +48,6 @@ function Navbar() {
               gap-3
             "
           >
-            {/* bookmarks */}
             <Link
               to="/bookmarks"
               className="
@@ -76,7 +74,6 @@ function Navbar() {
               </span>
             </Link>
 
-            {/* auth buttons */}
             {user ? (
               <button
                 onClick={logout}
@@ -91,6 +88,7 @@ function Navbar() {
                   gap-2
                   hover:bg-red-600
                   transition
+                  cursor-pointer
                 "
               >
                 <LogOut size={18} />

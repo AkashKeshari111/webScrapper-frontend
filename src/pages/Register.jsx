@@ -36,7 +36,7 @@ function Register() {
     try {
       const { data } = await API.post("/auth/register", formData);
 
-      login(data.data);
+      login(data?.data);
 
       navigate("/");
     } catch (error) {

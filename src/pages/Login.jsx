@@ -35,7 +35,7 @@ function Login() {
     try {
       const { data } = await API.post("/auth/login", formData);
 
-      login(data.data);
+      login(data?.data);
 
       navigate("/");
     } catch (error) {

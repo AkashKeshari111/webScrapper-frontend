@@ -29,7 +29,6 @@ function AuthLayout({ title, subtitle, children }) {
       >
         <div className="mb-8">
           <div className="flex items-start gap-3">
-            {/* back button */}
             <button
               onClick={() => navigate(-1)}
               className="
@@ -43,6 +42,7 @@ function AuthLayout({ title, subtitle, children }) {
                 hover:bg-gray-100
                 transition
                 shrink-0
+                cursor-pointer
               "
             >
               <ArrowLeft size={18} />

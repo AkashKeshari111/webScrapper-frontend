@@ -13,12 +13,13 @@ export const BookmarkProvider = ({ children }) => {
     try {
       const { data } = await API.get("/user/bookmarks");
       setBookmarkedStories(data?.data || []);
+      console.log(data?.data);
     } catch (err) {
       console.log(err);
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (user) {
       fetchBookmarks();
     } else {
@@ -26,14 +27,12 @@ export const BookmarkProvider = ({ children }) => {
     }
   }, [user]);
 
-  
-
   const toggleBookmark = async (id) => {
     try {
       const { data } = await API.post(`/stories/${id}/bookmark`);
-      const updatedIds = data.data.bookmarks.map((b) => b._id || b);
+      const updatedIds = data?.data?.bookmarks?.map((b) => b._id || b);
 
-      setBookmarkedStories(data.data);
+      setBookmarkedStories(data?.data);
     } catch (err) {
       console.log(err);
     }

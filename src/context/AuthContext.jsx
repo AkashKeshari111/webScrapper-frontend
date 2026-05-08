@@ -16,18 +16,21 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // LOGIN
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };
-
-  // LOGOUT
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("user");
+  
+  const logout = async () => {
+    try {
+      await API.post("/auth/logout");
+    } catch (error) {
+      console.log("Logout API error:", error);
+    } finally {
+      setUser(null);
+      localStorage.removeItem("user");
+    }
   };
-
   return (
     <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
       {children}

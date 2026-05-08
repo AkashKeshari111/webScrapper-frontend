@@ -115,7 +115,7 @@ function StoryDetails() {
               <button
                 onClick={handleBookmark}
                 className={`
-                  h-14 px-7 rounded-2xl border flex items-center gap-3 font-medium transition
+                  h-14 px-7 rounded-2xl border flex items-center gap-3 font-medium transition cursor-pointer
 
                   ${isBookmarked ? "bg-black text-white" : "hover:bg-gray-100"}
                 `}
