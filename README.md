@@ -1,16 +1,171 @@
-# React + Vite
+# 🔥 WebScraper News App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🌐 Live Demo: https://scrapenews.vercel.app/
 
-Currently, two official plugins are available:
+A full-stack MERN application that scrapes trending Hacker News stories, allows users to bookmark articles, and provides secure authentication using JWT stored in HTTP-only cookies.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+# 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🧠 Live web scraping of Hacker News (Top Stories)
+- 🔐 Authentication (Register / Login)
+- 🍪 Secure JWT authentication using HTTP-only cookies
+- 🔖 Bookmark / Unbookmark stories
+- 📄 Server-side pagination
+- ⚡ Optimized MongoDB bulkWrite for scraping
+- 🎯 Global state management using Context API
+- 🎨 Responsive UI with Tailwind CSS
+- 🔄 Instant UI sync for bookmarks (no refresh required)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 🛠️ Tech Stack
+
+## Frontend
+- React.js
+- Tailwind CSS
+- Axios
+- React Router
+- Context API
+
+## Backend
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- JWT Authentication
+- bcrypt.js
+- Cheerio (Web Scraping)
+- Axios
+
+---
+
+# 📁 Project Structure
+
+backend/
+├── controllers/
+├── models/
+├── routes/
+├── middlewares/
+├── utils/
+└── server.js
+
+frontend/
+├── components/
+├── pages/
+├── context/
+├── services/
+└── App.jsx
+
+---
+
+# ⚙️ Setup Instructions
+
+## 1️⃣ Clone Repository
+
+git clone https://github.com/your-username/webscraper.git
+cd webscraper
+
+---
+
+## 2️⃣ Backend Setup
+
+cd backend
+npm install
+
+---
+
+## 3️⃣ Frontend Setup
+
+cd frontend
+npm install
+
+---
+
+# 🔐 Environment Variables
+
+## Backend (.env)
+
+PORT=8080
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+NODE_ENV=development
+CLIENT_URL=http://localhost:5173
+
+---
+
+## Frontend (.env)
+
+VITE_API_URL=http://localhost:8080/api
+
+---
+
+# ▶️ Run Project Locally
+
+## Start Backend
+
+cd backend
+npm run dev
+
+Server runs at:
+http://localhost:8080
+
+---
+
+## Start Frontend
+
+cd frontend
+npm run dev
+
+Frontend runs at:
+http://localhost:5173
+
+---
+
+# 🔗 API Endpoints
+
+## Auth
+- POST /api/auth/register
+- POST /api/auth/login
+
+## Stories
+- GET /api/stories
+- GET /api/stories/:id
+- POST /api/stories/:id/bookmark
+
+## User
+- GET /api/user/bookmarks
+
+## Scraper
+- GET /api/scrape
+
+---
+
+# 🔥 Key Highlights
+
+- ⚡ Real-time scraping from Hacker News
+- 🔐 Secure JWT authentication with cookies
+- 📦 Optimized backend using bulk database operations
+- 🔄 Instant bookmark toggle (optimistic UI)
+- 📊 Pagination support for scalability
+- 🎯 Fully responsive modern UI
+
+---
+
+# 🚀 Deployment
+
+- Frontend: Vercel
+- Backend: Node.js server (Render/AWS compatible)
+- Database: MongoDB Atlas
+
+---
+
+# 👨‍💻 Author
+
+Built with ❤️ by Akash
+
+---
+
+# 🌐 Live Project
+
+https://scrapenews.vercel.app/
