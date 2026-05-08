@@ -1,21 +1,17 @@
 import { useState, useContext } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
-
 import { AuthContext } from "../context/AuthContext";
-
 import API from "../services/api";
 
 import AuthLayout from "../components/auth/AuthLayout";
-
 import AuthInput from "../components/auth/AuthInput";
-
 import AuthButton from "../components/auth/AuthButton";
 
 function Register() {
   const navigate = useNavigate();
-
   const { login } = useContext(AuthContext);
+
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,21 +28,38 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     try {
       const { data } = await API.post("/auth/register", formData);
 
       login(data?.data);
-
       navigate("/");
     } catch (error) {
-      alert(error.response?.data?.message);
+      setError(error.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
     <AuthLayout title="Create Account" subtitle="Start exploring stories">
+
+      {/* 🔥 ERROR BOX */}
+      {error && (
+        <div className="
+          mb-4
+          px-4 py-3
+          rounded-xl
+          bg-red-50
+          border border-red-200
+          text-red-600
+          text-sm
+        ">
+          {error}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
+
         <AuthInput
           type="text"
           name="name"
@@ -69,6 +82,7 @@ function Register() {
         />
 
         <AuthButton text="Register" />
+
       </form>
 
       <p className="text-sm text-center text-gray-500 mt-6">
@@ -77,6 +91,7 @@ function Register() {
           Login
         </Link>
       </p>
+
     </AuthLayout>
   );
 }
